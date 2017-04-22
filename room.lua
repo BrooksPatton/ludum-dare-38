@@ -69,6 +69,7 @@ function Room:update(dt)
   end
 
   self.player:update(dt)
+  self.player:checkEdges()
 end
 
 function Room:didBulletHitBall(ball, bullet)

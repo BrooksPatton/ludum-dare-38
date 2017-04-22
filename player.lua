@@ -106,4 +106,12 @@ function Player:isHitByBall(ball)
   end
 end
 
+function Player:checkEdges()
+  if self.location.x > width - self.width then
+    self.location.x = width - self.width
+  elseif self.location.x < 0 then
+    self.location.x = 0
+  end
+end
+
 return Player
