@@ -40,9 +40,14 @@ function Room:update(dt)
     ball:update()
     ball:checkEdges()
 
+    local playerHit = self.player:isHitByBall(ball)
+    if playerHit and self.player.lives > 0 then
+      self.player.lives = self.player.lives - 1
+    end
+
     if self.player.bullet then
       if self:didBulletHitBall(ball, self.player.bullet) then
-        ball = nil
+        table.remove(self.balls, i)
       end
     end
   end

@@ -13,7 +13,6 @@ function Game.new()
 
   t.state = 'landing'
   t.isPlaying = true
-  t.lives = 1
   t.score = 0
   t.level = 0
   t.room = Room.new(30)
@@ -45,8 +44,22 @@ function Game:update(dt)
   end
 
   if self.state == 'game' then
-    if self.isPlaying then
-      self.room:update(dt)
+    self.room:update(dt)
+
+    if self.room.player.lives == 0 then
+      local isReturnDown = love.keyboard.isScancodeDown('return')
+
+      if isReturnDown then
+        self:nextState()
+      end
+    end
+  end
+
+  if self.state == 'end' then
+    local isReturnDown = love.keyboard.isScancodeDown('space')
+
+    if isReturnDown then
+      self:nextState()
     end
   end
 end
@@ -56,6 +69,8 @@ function Game:nextState()
     self.state = 'game'
   elseif self.state == 'game' then
     self.state = 'end'
+  elseif self.state == 'end' then
+    self.state = 'landing'
   end
 end
 

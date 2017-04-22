@@ -16,12 +16,16 @@ function Player.new()
   t.acceleration = Vector.new(0, 0)
   t.friction = 0.90
   t.bullet = nil
+  t.lives = 1
+  t.red = 255
+  t.green = 255
+  t.blue = 255
 
   return t
 end
 
 function Player:draw()
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(self.red, self.green, self.blue)
   love.graphics.rectangle('fill', self.location.x, self.location.y, self.width, self.height)
 
   if self.bullet then
@@ -30,31 +34,38 @@ function Player:draw()
 end
 
 function Player:update(dt)
-  local isLeftDown = love.keyboard.isScancodeDown('left')
-  local isRightDown = love.keyboard.isScancodeDown('right')
-  local isMouseDown = love.mouse.isDown(1)
+  if self.lives > 0 then
 
-  if isLeftDown then
-    local move = Vector.new(self.speed * -1, 0)
-    self:applyForce(move * dt)
-  elseif isRightDown then
-    local move = Vector.new(self.speed, 0)
-    self:applyForce(move * dt)
-  end
+    local isLeftDown = love.keyboard.isScancodeDown('left')
+    local isRightDown = love.keyboard.isScancodeDown('right')
+    local isMouseDown = love.mouse.isDown(1)
 
-  if isMouseDown and not self.bullet then
-    local location = self.location:clone()
-    local mouseLocation = Vector.new(love.mouse.getX(), love.mouse.getY())
-    local direction = mouseLocation - location
-    direction = direction:normalized() * 100
-
-    self.bullet = Bullet.new(location)
-
-    self.bullet:applyForce(direction)
-  elseif self.bullet then
-    if self:isBulletOffScreen() then
-      self.bullet = nil
+    if isLeftDown then
+      local move = Vector.new(self.speed * -1, 0)
+      self:applyForce(move * dt)
+    elseif isRightDown then
+      local move = Vector.new(self.speed, 0)
+      self:applyForce(move * dt)
     end
+
+    if isMouseDown and not self.bullet then
+      local location = self.location:clone()
+      local mouseLocation = Vector.new(love.mouse.getX(), love.mouse.getY())
+      local direction = mouseLocation - location
+      direction = direction:normalized() * 100
+
+      self.bullet = Bullet.new(location)
+
+      self.bullet:applyForce(direction)
+    elseif self.bullet then
+      if self:isBulletOffScreen() then
+        self.bullet = nil
+      end
+    end
+  else
+    self.red = 255
+    self.green = 0
+    self.blue = 0
   end
 
   self.velocity = self.velocity + self.acceleration
@@ -85,6 +96,14 @@ function Player:isBulletOffScreen()
   end
 
   return result
+end
+
+function Player:isHitByBall(ball)
+  local dist = self.location:dist(ball.location)
+
+  if dist < ball.radius then
+    return true
+  end
 end
 
 return Player
