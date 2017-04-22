@@ -3,14 +3,14 @@ local Vector = require('./vector')
 local Ball = {}
 Ball.__index = Ball
 
-function Ball.new()
+function Ball.new(acceleration, location, radius)
   local t = {}
   setmetatable(t, Ball)
 
-  t.radius = 15
-  t.location = Vector.new(0, 0)
+  t.radius = radius
+  t.location = location
   t.velocity = Vector.new(0, 0)
-  t.acceleration = Vector.new(10, 0)
+  t.acceleration = acceleration
 
   return t
 end
