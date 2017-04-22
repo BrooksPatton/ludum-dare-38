@@ -7,21 +7,44 @@ function Ball.new(acceleration, location, radius)
   local t = {}
   setmetatable(t, Ball)
 
+  t.mass = love.math.random(0, 5)
   t.radius = radius
   t.location = location
   t.velocity = Vector.new(0, 0)
   t.acceleration = acceleration
 
+  if t.mass == 0 then
+    t.color = {255, 255, 255}
+  elseif t.mass == 1 then
+    t.color = {255, 255, 0}
+  elseif t.mass == 2 then
+    t.color = {255, 0, 0}
+  elseif t.mass == 3 then
+    t.color = {0, 255, 255}
+  elseif t.mass == 4 then
+    t.color = {0, 0, 150}
+  elseif t.mass == 5 then
+    t.color = {255, 0, 255}
+  end
+
   return t
 end
 
 function Ball:draw()
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(self.color)
   love.graphics.circle('line', self.location.x, self.location.y, self.radius)
 end
 
 function Ball:applyForce(force)
-  self.acceleration = self.acceleration + force
+  local f
+
+  if self.mass == 0 then
+    f = force
+  else
+    f = force / self.mass
+  end
+
+  self.acceleration = self.acceleration + f
 end
 
 function Ball:update()
