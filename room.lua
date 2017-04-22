@@ -48,6 +48,7 @@ function Room:update(dt)
     if self.player.bullet then
       if self:didBulletHitBall(ball, self.player.bullet) then
         table.remove(self.balls, i)
+        self.player.bullet = nil
       end
     end
   end
