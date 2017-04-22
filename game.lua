@@ -14,8 +14,8 @@ function Game.new()
   t.state = 'landing'
   t.isPlaying = true
   t.score = 0
-  t.level = 0
   t.room = Room.new(30)
+  t.timeSinceLastScore = love.timer.getTime()
 
   return t
 end
@@ -27,6 +27,7 @@ function Game:draw()
 
   if self.state == 'game' then
     self.room:draw()
+    love.graphics.print(self.score, width - 200, 5)
   end
 
   if self.state == 'end' then
@@ -52,6 +53,8 @@ function Game:update(dt)
       if isReturnDown then
         self:nextState()
       end
+    elseif self.room.player.lives > 0 and self.room:ballsLeft() > 0 then
+      self:updateScore()
     end
   end
 
@@ -71,6 +74,18 @@ function Game:nextState()
     self.state = 'end'
   elseif self.state == 'end' then
     self.state = 'landing'
+  end
+end
+
+function Game:updateScore()
+  local currentTime = love.timer.getTime()
+  local delta = currentTime - self.timeSinceLastScore
+  
+  if delta >= 1 then
+    local mod = self.room:ballsLeft()
+
+    self.score = self.score + 1 * mod
+    self.timeSinceLastScore = currentTime
   end
 end
 
