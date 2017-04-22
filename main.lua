@@ -11,5 +11,7 @@ function love.draw()
 end
 
 function love.update(dt)
+  dt = math.min(0.029, dt)
+
   game:update(dt)
 end
