@@ -1,5 +1,8 @@
 local landingScreen = require('./landing-screen')
 local endScreen = require('./end-screen')
+local Room = require('./room')
+local Ball = require('./ball')
+
 local Game = {}
 
 Game.__index = Game
@@ -9,7 +12,11 @@ function Game.new()
   setmetatable(t, Game)
 
   t.state = 'landing'
+  t.isPlaying = true
+  t.lives = 1
   t.score = 0
+  t.level = 0
+  t.room = Room.new(30)
 
   return t
 end
@@ -19,12 +26,16 @@ function Game:draw()
     landingScreen()
   end
 
+  if self.state == 'game' then
+    self.room:draw()
+  end
+
   if self.state == 'end' then
     endScreen()
   end
 end
 
-function Game:update()
+function Game:update(dt)
   if self.state == 'landing' then
     local isReturnDown = love.keyboard.isScancodeDown('return')
 
@@ -34,10 +45,8 @@ function Game:update()
   end
 
   if self.state == 'game' then
-    local isReturnDown = love.keyboard.isScancodeDown('space')
-
-    if isReturnDown then
-      self:nextState()
+    if self.isPlaying then
+      self.room:update(dt)
     end
   end
 end
