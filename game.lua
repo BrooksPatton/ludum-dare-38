@@ -46,7 +46,7 @@ function Game:update(dt)
   if self.state == 'game' then
     self.room:update(dt)
 
-    if self.room.player.lives == 0 then
+    if self.room.player.lives == 0 or self.room:ballsLeft() == 0 then
       local isReturnDown = love.keyboard.isScancodeDown('return')
 
       if isReturnDown then

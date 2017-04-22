@@ -82,4 +82,8 @@ function Room:shouldAddBall()
   return false
 end
 
+function Room:ballsLeft()
+  return table.getn(self.balls)
+end
+
 return Room
