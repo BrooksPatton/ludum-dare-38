@@ -13,12 +13,12 @@ function Room.new()
   t.location = Vector.new(0, 0)
   t.width = width
   t.height = height
-  t.balls = {}
+  t.balls = {Ball.new()}
   t.gravity = Vector.new(0, 30)
   t.player = Player.new()
   t.timeBallLastAdded = love.timer.getTime()
   t.maxBalls = 5
-  t.ballsCreated = 0
+  t.ballsCreated = 1
 
   return t
 end

@@ -12,10 +12,6 @@ function Game.new()
   setmetatable(t, Game)
 
   t.state = 'landing'
-  t.isPlaying = true
-  t.score = 0
-  t.room = Room.new(30)
-  t.timeSinceLastScore = love.timer.getTime()
 
   return t
 end
@@ -40,6 +36,7 @@ function Game:update(dt)
     local isReturnDown = love.keyboard.isScancodeDown('return')
 
     if isReturnDown then
+      self:reset()
       self:nextState()
     end
   end
@@ -87,6 +84,13 @@ function Game:updateScore()
     self.score = self.score + 1 * mod
     self.timeSinceLastScore = currentTime
   end
+end
+
+function Game:reset()
+  self.isPlaying = true
+  self.score = 0
+  self.room = Room.new()
+  self.timeSinceLastScore = love.timer.getTime()
 end
 
 return Game
