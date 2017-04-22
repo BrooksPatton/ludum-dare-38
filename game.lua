@@ -1,4 +1,5 @@
 local landingScreen = require('./landing-screen')
+local endScreen = require('./end-screen')
 local Game = {}
 
 Game.__index = Game
@@ -17,6 +18,10 @@ function Game:draw()
   if self.state == 'landing' then
     landingScreen()
   end
+
+  if self.state == 'end' then
+    endScreen()
+  end
 end
 
 function Game:update()
@@ -27,11 +32,21 @@ function Game:update()
       self:nextState()
     end
   end
+
+  if self.state == 'game' then
+    local isReturnDown = love.keyboard.isScancodeDown('space')
+
+    if isReturnDown then
+      self:nextState()
+    end
+  end
 end
 
 function Game:nextState()
   if self.state == 'landing' then
     self.state = 'game'
+  elseif self.state == 'game' then
+    self.state = 'end'
   end
 end
 
