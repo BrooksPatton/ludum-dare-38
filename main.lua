@@ -1,12 +1,15 @@
-local Game = require('./game')
+local Game = require('./game')
 
-function love.()
-    width = love.graphics.getWidth()
-    height = love.graphics.getHeight()
-
-    game = Game.new()
+function love.load()
+  width = love.graphics.getWidth()
+  height = love.graphics.getHeight()
+  game = Game.new()
 end
 
 function love.draw()
+  game:draw()
+end
 
-end
+function love.update()
+  game:update()
+end
