@@ -18,7 +18,6 @@ function Landing.new()
   t.levelButtons = {}
   t:createLevelButtons(7)
 
-  print(level)
   t:setBorder()
 
   return t

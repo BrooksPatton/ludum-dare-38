@@ -1,5 +1,6 @@
+local http = require('socket.http')
 local Landing = require('./landing-screen')
-local endScreen = require('./end-screen')
+local EndScreen = require('./end-screen')
 local Room = require('./room')
 local Ball = require('./ball')
 
@@ -13,6 +14,7 @@ function Game.new()
 
   t.state = 'landing'
   t.landing = Landing.new()
+  t.endScreen = EndScreen.new()
 
   return t
 end
@@ -28,7 +30,7 @@ function Game:draw()
   end
 
   if self.state == 'end' then
-    endScreen()
+    self.endScreen:draw()
   end
 end
 
@@ -63,6 +65,8 @@ function Game:update(dt)
 
     if isReturnDown then
       self:nextState()
+    else
+      self.endScreen:update()
     end
   end
 end
