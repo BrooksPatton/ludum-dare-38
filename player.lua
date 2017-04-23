@@ -38,12 +38,14 @@ function Player:update(dt)
 
     local isLeftDown = love.keyboard.isScancodeDown('left')
     local isRightDown = love.keyboard.isScancodeDown('right')
+    local isADown = love.keyboard.isScancodeDown('a')
+    local isDDown = love.keyboard.isScancodeDown('d')
     local isMouseDown = love.mouse.isDown(1)
 
-    if isLeftDown then
+    if isLeftDown or isADown then
       local move = Vector.new(self.speed * -1, 0)
       self:applyForce(move * dt)
-    elseif isRightDown then
+    elseif isRightDown or isDDown then
       local move = Vector.new(self.speed, 0)
       self:applyForce(move * dt)
     end
