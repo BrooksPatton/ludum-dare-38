@@ -27,4 +27,6 @@ function loadSounds()
 
   se.ballCreate = love.audio.newSource('sounds/create_ball_01.ogg', 'static')
   se.bounce3 = love.audio.newSource('sounds/bounce_03.ogg', 'static')
+  se.fire1 = love.audio.newSource('sounds/fire_01.ogg', 'static')
+  se.killed1 = love.audio.newSource('sounds/killed_01.ogg', 'static')
 end

@@ -13,6 +13,8 @@ function Bullet.new(location)
   t.speed = 8
   t.size = 2
 
+  love.audio.play(se.fire1)
+
   return t
 end
 

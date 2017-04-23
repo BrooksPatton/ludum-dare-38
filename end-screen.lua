@@ -87,7 +87,6 @@ end
 
 function EndScreen:update()
   if self.highScores and not self.processedHighScores then
-    print('processing high score')
     self:checkIfInTop()
     if self.inTop then
       self:sendScoreToServer()

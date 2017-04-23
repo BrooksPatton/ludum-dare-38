@@ -45,7 +45,10 @@ function Room:update(dt)
     ball:checkEdges()
 
     local playerHit = self.player:isHitByBall(ball)
+
+
     if playerHit and self.player.lives > 0 then
+      love.audio.play(se.killed1)
       self.player.lives = self.player.lives - 1
     end
 

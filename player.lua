@@ -41,6 +41,7 @@ function Player:update(dt)
     local isADown = love.keyboard.isScancodeDown('a')
     local isDDown = love.keyboard.isScancodeDown('d')
     local isMouseDown = love.mouse.isDown(1)
+    local isSpaceDown = love.keyboard.isScancodeDown('space')
 
     if isLeftDown or isADown then
       local move = Vector.new(self.speed * -1, 0)
@@ -50,7 +51,7 @@ function Player:update(dt)
       self:applyForce(move * dt)
     end
 
-    if isMouseDown and not self.bullet then
+    if isMouseDown  or isSpaceDown and not self.bullet then
       local location = self.location:clone()
       local mouseLocation = Vector.new(love.mouse.getX(), love.mouse.getY())
       local direction = mouseLocation - location
