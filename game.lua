@@ -14,6 +14,7 @@ function Game.new()
 
   t.state = 'landing'
   t.landing = Landing.new()
+  t.winOrLose = nil
 
   return t
 end
@@ -50,6 +51,14 @@ function Game:update(dt)
 
     if self.room.player.lives == 0 or self.room:ballsLeft() == 0 then
       local isReturnDown = love.keyboard.isScancodeDown('return')
+
+      if not self.time then
+        self.time = love.timer.getTime()
+      end
+      if love.timer.getTime() - self.time > 3 then
+        isReturnDown = true
+      end
+
 
       if isReturnDown and not self.endScreen then
         self.endScreen = EndScreen.new()
