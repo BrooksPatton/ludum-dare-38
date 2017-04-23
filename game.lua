@@ -1,4 +1,4 @@
-local landingScreen = require('./landing-screen')
+local Landing = require('./landing-screen')
 local endScreen = require('./end-screen')
 local Room = require('./room')
 local Ball = require('./ball')
@@ -12,13 +12,14 @@ function Game.new()
   setmetatable(t, Game)
 
   t.state = 'landing'
+  t.landing = Landing.new()
 
   return t
 end
 
 function Game:draw()
   if self.state == 'landing' then
-    landingScreen()
+    self.landing:draw()
   end
 
   if self.state == 'game' then
@@ -38,6 +39,8 @@ function Game:update(dt)
     if isReturnDown then
       self:reset()
       self:nextState()
+    else
+      self.landing:update()
     end
   end
 
@@ -81,7 +84,7 @@ function Game:updateScore()
   if delta >= 1 then
     local mod = self.room:ballsLeft()
 
-    self.score = self.score + 1 * mod
+    self.score = self.score + 1 * mod * level
     self.timeSinceLastScore = currentTime
   end
 end

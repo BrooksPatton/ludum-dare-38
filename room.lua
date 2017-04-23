@@ -17,7 +17,7 @@ function Room.new()
   t.gravity = Vector.new(0, 30)
   t.player = Player.new()
   t.timeBallLastAdded = love.timer.getTime()
-  t.maxBalls = 1
+  t.maxBalls = level
   t.ballsCreated = 1
   t.startingBallSize = 100
   t.minBallSize = t.startingBallSize / 4

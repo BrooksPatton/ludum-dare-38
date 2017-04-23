@@ -12,6 +12,7 @@ function Ball.new(acceleration, location, radius)
   t.location = location
   t.velocity = Vector.new(0, 0)
   t.acceleration = acceleration
+  t.lineWidth = 3
 
   if t.mass == 0 then
     t.color = {255, 255, 255}
@@ -31,6 +32,7 @@ function Ball.new(acceleration, location, radius)
 end
 
 function Ball:draw()
+  love.graphics.setLineWidth(self.lineWidth)
   love.graphics.setColor(self.color)
   love.graphics.circle('line', self.location.x, self.location.y, self.radius)
 end
