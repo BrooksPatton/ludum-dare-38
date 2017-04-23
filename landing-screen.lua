@@ -9,7 +9,6 @@ function Landing.new()
   local t = {}
   setmetatable(t, Landing)
 
-
   t.titleText = 'A Small Room'
   t.titleFont = love.graphics.newFont(42)
   t.titleLoc = Vector.new(250, 30)
