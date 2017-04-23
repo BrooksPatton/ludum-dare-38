@@ -1,3 +1,4 @@
+require('./cupid')
 local Game = require('./game')
 
 function love.load()
