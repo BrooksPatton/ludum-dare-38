@@ -58,7 +58,7 @@ function EndScreen.new(lives)
 
   t.hiScoreText = 'High Score!'
   t.hiScoreFont = love.graphics.newFont(32)
-  t.hiScoreLoc = Vector.new(t.myScoreLoc.x - 15, t.myScoreLoc.y + 50)
+  t.hiScoreLoc = Vector.new(t.myScoreLoc.x, t.myScoreLoc.y + 50)
   t.hiScoreColor = {50, 255, 50}
 
   t.playText = 'press SPACE to play again'
@@ -83,14 +83,6 @@ function EndScreen:draw()
   if self.highScores then
     self:drawHighScores(self.highScoresLoc)
   end
-
-  if self.inTop then
-    love.graphics.print('You are in the top 10!', 50, 200)
-  end
-
-  love.graphics.setColor(200, 255, 200)
-  love.graphics.setLineWidth(1)
-  love.graphics.line(width / 2, 0, width / 2, height)
 end
 
 function EndScreen:update()
@@ -99,6 +91,8 @@ function EndScreen:update()
     self:checkIfInTop()
     if self.inTop then
       self:sendScoreToServer()
+      self.getHighScores:start()
+      self.highScores = nil
     end
     self.processedHighScores = true
   elseif not self.highScores then
@@ -143,15 +137,21 @@ function EndScreen:selectWords()
 end
 
 function EndScreen:drawHighScores(textLoc)
-  local color = {200, 200, 200}
   local highScoresFont = love.graphics.newFont(18)
+  local coloredMyScore = false
 
   for i, v in ipairs(self.highScores) do
+    local color = {200, 200, 200}
     local offset = textLoc.y + 10
     offset = offset + i * 30
 
     local location = Vector.new(textLoc.x + 35, offset)
     local text = i .. '. ' .. v.score
+
+    if v.score == score and not coloredMyScore then
+      color = {100, 255, 100}
+      coloredMyScore = true
+    end
 
     love.graphics.setColor(color)
     love.graphics.setFont(highScoresFont)

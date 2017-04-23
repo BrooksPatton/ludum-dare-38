@@ -16,17 +16,25 @@ function Ball.new(acceleration, location, radius)
 
   if t.mass == 0 then
     t.color = {255, 255, 255}
+    t.bounceSound = 'bounce3'
   elseif t.mass == 1 then
     t.color = {255, 255, 0}
+    t.bounceSound = 'bounce3'
   elseif t.mass == 2 then
     t.color = {255, 0, 0}
+    t.bounceSound = 'bounce3'
   elseif t.mass == 3 then
     t.color = {0, 255, 255}
+    t.bounceSound = 'bounce3'
   elseif t.mass == 4 then
     t.color = {0, 0, 150}
+    t.bounceSound = 'bounce3'
   elseif t.mass == 5 then
     t.color = {255, 0, 255}
+    t.bounceSound = 'bounce3'
   end
+
+  love.audio.play(se.ballCreate)
 
   return t
 end
@@ -59,17 +67,21 @@ function Ball:checkEdges()
   if self.location.y > height then
     self.location.y = height
     self.velocity.y = self.velocity.y * -1
+    love.audio.play(se[self.bounceSound])
   elseif self.location.y < 0 then
     self.location.y = 0
     self.velocity.y = self.velocity.y * -1
+    --love.audio.play(se[self.bounceSound])
   end
 
   if self.location.x > width then
     self.location.x = width
     self.velocity.x = self.velocity.x * -1
+    --love.audio.play(se[self.bounceSound])
   elseif self.location.x < 0 then
     self.location.x = 0
     self.velocity.x = self.velocity.x * -1
+    --love.audio.play(se[self.bounceSound])
   end
 end
 

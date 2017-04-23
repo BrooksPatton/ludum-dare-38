@@ -16,7 +16,7 @@ function Player.new()
   t.acceleration = Vector.new(0, 0)
   t.friction = 0.90
   t.bullet = nil
-  t.lives = 0
+  t.lives = 1
   t.red = 255
   t.green = 255
   t.blue = 255

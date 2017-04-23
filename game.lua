@@ -38,7 +38,6 @@ function Game:update(dt)
   if self.state == 'landing' then
     local isReturnDown = love.keyboard.isScancodeDown('return')
 
-    isReturnDown = true
     if isReturnDown then
       self:reset()
       self:nextState()
@@ -52,7 +51,7 @@ function Game:update(dt)
 
     if self.room.player.lives == 0 or self.room:ballsLeft() == 0 then
       local isReturnDown = love.keyboard.isScancodeDown('return')
-isReturnDown = true
+
       if not self.time then
         self.time = love.timer.getTime()
       end
@@ -109,6 +108,7 @@ function Game:reset()
   self.room = Room.new()
   self.timeSinceLastScore = love.timer.getTime()
   self.endScreen = nil
+  self.time = nil
 end
 
 return Game
