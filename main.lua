@@ -1,6 +1,7 @@
 local Game = require('./game')
 
 function love.load()
+  score = 0
   level = 1
   width = love.graphics.getWidth()
   height = love.graphics.getHeight()

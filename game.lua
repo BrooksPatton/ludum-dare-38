@@ -14,7 +14,6 @@ function Game.new()
 
   t.state = 'landing'
   t.landing = Landing.new()
-  t.endScreen = EndScreen.new()
 
   return t
 end
@@ -26,7 +25,7 @@ function Game:draw()
 
   if self.state == 'game' then
     self.room:draw()
-    love.graphics.print(self.score, width - 200, 5)
+    love.graphics.print(score, width - 200, 5)
   end
 
   if self.state == 'end' then
@@ -52,7 +51,8 @@ function Game:update(dt)
     if self.room.player.lives == 0 or self.room:ballsLeft() == 0 then
       local isReturnDown = love.keyboard.isScancodeDown('return')
 
-      if isReturnDown then
+      if isReturnDown and not self.endScreen then
+        self.endScreen = EndScreen.new()
         self:nextState()
       end
     elseif self.room.player.lives > 0 and self.room:ballsLeft() > 0 then
@@ -88,16 +88,17 @@ function Game:updateScore()
   if delta >= 1 then
     local mod = self.room:ballsLeft()
 
-    self.score = self.score + 1 * mod * level
+    score = score + 1 * mod * level
     self.timeSinceLastScore = currentTime
   end
 end
 
 function Game:reset()
   self.isPlaying = true
-  self.score = 0
+  score = 0
   self.room = Room.new()
   self.timeSinceLastScore = love.timer.getTime()
+  self.endScreen = nil
 end
 
 return Game
